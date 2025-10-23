@@ -9,6 +9,7 @@ class Appointment extends Model
     protected $fillable = [
         'user_id',
         'begin_at',
-        'is_sent'
+        'is_sent',
+        'comment',
     ];
 }
