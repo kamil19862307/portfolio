@@ -14,7 +14,36 @@ class AppointmentController extends Controller
 {
     public function show(): View
     {
-        return view('calendar');
+        $appointments = Appointment::query()
+                            ->select(['begin_at'])
+                            ->where('is_sent', '=', 0)
+                            ->get();
+
+        // Для подсветки дня
+        $events = $appointments
+            ->pluck('begin_at')
+            ->map(function ($a) {
+                $date = Carbon::parse($a)->setTimezone('Europe/Moscow');
+
+                return $date->format('Y-m-d');
+
+            })
+            ->unique()
+            ->values()
+            ->all();
+
+        $busyRaw = $appointments->map(function ($a) {
+
+            $date = Carbon::parse($a->begin_at)->setTimezone('Europe/Moscow');
+
+            // toIso8601String даёт "+00:00" — заменим на Z для единообразия
+            $iso = $date->toIso8601String();
+
+            return preg_replace('/\+00:00$/', 'Z', $iso);
+
+        })->values()->all();
+
+        return view('calendar', compact('events', 'busyRaw'));
     }
 
     public function store(Request $request, TelegramService $telegram): JsonResponse
