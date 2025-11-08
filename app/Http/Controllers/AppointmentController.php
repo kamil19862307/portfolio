@@ -9,6 +9,8 @@ use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class AppointmentController extends Controller
 {
@@ -54,20 +56,48 @@ class AppointmentController extends Controller
             'comment' => 'nullable|string|max:500',
         ]);
 
-        $appointment = Appointment::create($validated);
+        DB::beginTransaction();
+        try {
+            $appointment = Appointment::create($validated);
 
-        $message = "Новая запись на консультацию\n\n" .
-                    "Время: {$appointment->begin_at}\n" .
-                    "User ID: " . ($appointment->user_id ?? 'Гость') . "\n" .
-                    "Комментарий: " . ($appointment->comment ?: 'Без комментария');
+            DB::commit();
 
-        $telegram->sendMessage($message);
+            //После успешного коммита, выполняем остальные действия
+            $message = "Новая запись на консультацию\n\n" .
+                "Время: {$appointment->begin_at}\n" .
+                "User ID: " . ($appointment->user_id ?? 'Гость') . "\n" .
+                "Комментарий: " . ($appointment->comment ?: 'Без комментария');
 
-        // Расчёт времени для отложенной отправки за 2 минуты до начала
-        $sendAt = Carbon::parse($appointment->begin_at)->subMinutes(2);
+            try {
+                $telegram->sendMessage($message);
 
-        SendAppointmentReminder::dispatch($appointment)->delay($sendAt);
+            }catch (\Throwable $exception){
+                Log::error('Не удалось отправить сообщение в телеграм, appointment ID: ' . $appointment->id,
+                ['exception' => $exception->getMessage()]);
+            }
 
-        return response()->json(['message' => 'Запись создана и уведомление отправлено']);
+            // Расчёт времени для отложенной отправки за 2 минуты до начала
+            $sendAt = Carbon::parse($appointment->begin_at)->subMinutes(2);
+
+            SendAppointmentReminder::dispatch($appointment)->delay($sendAt);
+
+            return response()->json([
+                'message' => 'Запись создана и уведомление отправлено',
+                'appointment' => $appointment
+            ], 201);
+
+        }catch (\Throwable $exception){
+            DB::rollBack();
+
+            Log::error('Не получилось создать запись встречи в Базе Данных.', [
+                'error' => $exception->getMessage(),
+                'payload' => $validated
+            ]);
+
+            return response()->json([
+                'message' => 'Не удалось создать запись',
+                'error' => $exception->getMessage()
+            ], 500);
+        }
     }
 }
