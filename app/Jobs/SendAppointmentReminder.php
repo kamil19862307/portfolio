@@ -27,7 +27,7 @@ class SendAppointmentReminder implements ShouldQueue
     public function handle(TelegramService $telegram): void
     {
         $text = "Напоминание, встреча запланирована на: {$this->appointment->begin_at}.\n" .
-                "Комментарий: {$this->appointment->comment}.";
+                "Комментарий: " . ($this->appointment->comment ?: 'Без комментария');
 
         $telegram->sendMessage($text);
 

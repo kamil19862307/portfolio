@@ -51,7 +51,7 @@ class AppointmentController extends Controller
     public function store(Request $request, TelegramService $telegram): JsonResponse
     {
         $validated = $request->validate([
-            'begin_at' => 'required|date',
+            'begin_at' => 'required|date|unique:appointments,begin_at',
             'user_id' => 'nullable|integer',
             'comment' => 'nullable|string|max:500',
         ]);
