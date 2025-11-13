@@ -287,41 +287,47 @@
         // Подпись для подсказки, покажем timezone
         const tzLabel = serverTz || 'Europe/Moscow';
 
-        slots.forEach(({h,m}) => {
+        // Текущее абсолютное время в ms (UTC)
+        const nowTs = Date.now();
+        // Буфер в миллисекундах — например, 5 минут, чтобы защититься от гонки
+        const bufferMs = 300 * 1000;
+
+        slots.forEach(({ h, m }) => {
             const slotDate = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), h, m, 0));
             const slotTs = slotDate.getTime(); // epoch ms UTC
-
             const btn = document.createElement('button');
             btn.className = 'slot text-sm p-2 rounded-md border bg-white text-gray-700 flex flex-col items-center';
-            // Показываем два ряда: сверху — локальное время сервера, снизу — мелким шрифтом UTC (если нужно)
-            // Форматируем локальное время в serverTz
             const localForUi = new Date(slotTs).toLocaleString('ru-RU', {
-                timeZone: tzLabel,
+                timeZone: serverTz,
                 hour: '2-digit', minute: '2-digit', hour12: false
             });
-
             const utcForUi = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')} UTC`;
-
             btn.innerHTML = `<span class="font-medium">${localForUi} (MSK)</span><span class="text-xs text-gray-400">${utcForUi}</span>`;
 
-            if (busyMs.has(slotTs)) {
+            // Заблокируем, если:
+            // 1) слот уже помечен busy в busyMs
+            // 2) слот в прошлом относительно текущего времени (учитываем buffer)
+            const isBusy = busyMs.has(slotTs);
+            const isPast = slotTs <= (nowTs + bufferMs);
+
+            if (isBusy || isPast) {
                 btn.classList.add('unavailable');
                 btn.disabled = true;
+                // Можно добавить подсказку, чтобы пользователь понимал причину
+                if (isBusy) btn.title = 'Занято';
+                else btn.title = 'Прошедшее время';
             }
 
             btn.addEventListener('click', () => {
+                if (btn.disabled) return;
                 document.querySelectorAll('.slot').forEach(s => s.classList.remove('ring-2','ring-indigo-300','bg-indigo-50'));
                 btn.classList.add('ring-2','ring-indigo-300','bg-indigo-50');
 
-                // сохраняем однозначно — epoch ms UTC
                 chosenTimeTs = slotTs;
-
-                // отображаем выбранное время в UI как локальное серверное (MSK)
                 selectedTimeEl.textContent = new Date(chosenTimeTs).toLocaleString('ru-RU', {
-                    timeZone: tzLabel,
+                    timeZone: serverTz,
                     hour: '2-digit', minute: '2-digit', hour12: false
                 }) + ' (MSK)';
-
                 confirmTime.textContent = selectedTimeEl.textContent;
                 confirmBtn.disabled = false;
             });
