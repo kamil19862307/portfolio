@@ -260,12 +260,12 @@
         </div>
 
         <div class="bg-gradient-to-b from-indigo-50 to-white p-8 rounded-xl border flex flex-col justify-center">
-            <h4 class="font-semibold">Availability</h4>
+            <h4 class="font-semibold">Контакты</h4>
             <p class="text-gray-600 mt-2">Открыт для фриланс проектов и сотрудничества.</p>
             <div class="mt-6">
-                <div class="text-sm text-gray-500"><strong>Location</strong> — Варшава, Польша</div>
-                <div class="text-sm text-gray-500 mt-2"><strong>Phone</strong> — +48 • ••• ••• •••</div>
-                <div class="text-sm text-gray-500 mt-2"><strong>Email</strong> — kamil@example.com</div>
+                <div class="text-sm text-gray-500"><strong>Location</strong> — Россия, Казань</div>
+                <div class="text-sm text-gray-500 mt-2"><strong>Phone</strong> — +79297213040</div>
+                <div class="text-sm text-gray-500 mt-2"><strong>Email</strong> — kamil19862307@gmail.com</div>
             </div>
         </div>
     </section>
