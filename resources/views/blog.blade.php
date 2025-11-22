@@ -87,6 +87,7 @@
                 <li><a href="?cat=product" class="flex justify-between">Продукт <span class="text-xs">12</span></a></li>
                 <li><a href="?cat=tech" class="flex justify-between">Технологии <span class="text-xs">8</span></a></li>
                 <li><a href="?cat=design" class="flex justify-between">Дизайн <span class="text-xs">6</span></a></li>
+                <li><a href="?cat=design" class="flex justify-between">Курс доллара <span class="text-xs">{{ $currentUsd['rate'] }}</span></a></li>
             </ul>
         </div>
 
