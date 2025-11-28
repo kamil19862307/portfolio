@@ -9,6 +9,7 @@ use SimpleXMLElement;
 
 class CbrService
 {
+
     protected  string $url = 'https://www.cbr.ru/scripts/XML_daily.asp';
 
     // Можно передать дату в формате dd.MM.yyyy, либо не передавать — вернёт текущую дату ЦБ
@@ -32,13 +33,12 @@ class CbrService
 
     public function getUsd(?string $date = null): array
     {
+        // Если в кеше есть массив с данными курса, то возвращаем его же
+        if(Cache::has('cbrArray')){
+            return Cache::get('cbrArray');
+        }
+
         $cacheKey = 'cbr_cache_' . ($date ?? 'today');
-
-//        Cache::remember($cacheKey, $this->cacheTtlSeconds, function () use ($date) {
-//            $xml = $this->fetchAndParseXml($date);
-//            dd($xml);
-//        });
-
 
         $xml = $this->fetchAndParseXml($date);
 
@@ -52,11 +52,16 @@ class CbrService
                 $value = (float) str_replace(',', '.', $valueText);
                 $rate = $nominal > 1 ? $value / $nominal : $value;
 
-                return [
+                $currencyArray = [
                     'date' => $dateAttribute,
                     'currency' => 'USD',
                     'rate' => round($rate, 6),
                 ];
+
+                // Закешируем, чтобы часто не обращаться к сервису центбанка, всё равно курс на день выставляется.
+                Cache::put('cbrArray', $currencyArray, now()->addMinutes(60));
+
+                return $currencyArray;
             }
         }
 
