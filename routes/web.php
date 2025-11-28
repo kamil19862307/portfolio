@@ -11,3 +11,7 @@ Route::get('/', function () {
 Route::get('/calendar', [AppointmentController::class, 'show'])->name('calendar');
 
 Route::get('/blog', [BlogController::class, 'show'])->name('blog.show');
+
+Route::get('/admin', function () {
+    return view('admin.index');
+});

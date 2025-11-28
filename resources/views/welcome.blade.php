@@ -99,6 +99,7 @@
                         <text x="100" y="110" font-size="48" fill="white" font-family="sans-serif" font-weight="700" text-anchor="middle">KM</text>
                     </g>
                 </svg>
+                <img src="{{ asset('images/kamil.png') }}" alt="Аватар пользователя" class="relative w-full h-full object-cover" loading="lazy">
             </div>
         </div>
     </section>
