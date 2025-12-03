@@ -12,6 +12,20 @@ Route::get('/calendar', [AppointmentController::class, 'show'])->name('calendar'
 
 Route::get('/blog', [BlogController::class, 'show'])->name('blog.show');
 
-Route::get('/admin', function () {
-    return view('admin.index');
+
+// Admin panel
+Route::prefix('admin')
+
+    ->name('admin.')
+
+    ->group(function () {
+
+    Route::get('', function () {
+
+        return view('admin.index');
+
+    });
+
+    Route::resource('portfolio', App\Http\Controllers\Admin\PortfolioController::class);
+
 });

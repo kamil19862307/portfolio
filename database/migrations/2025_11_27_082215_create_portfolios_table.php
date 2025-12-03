@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('portfolios', function (Blueprint $table) {
             $table->id();
+
+            $table->string('title', 100);
+            $table->string('slug', 120);
+            $table->string('image', 100);
+            $table->text('description');
+
             $table->timestamps();
         });
     }
