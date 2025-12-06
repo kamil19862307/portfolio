@@ -1,4 +1,4 @@
-<div>
+<div class="mb-4 p-3">
     {{-- Success --}}
     @if (session('success'))
         <div class="mb-4 p-3 rounded-lg bg-green-500 text-white shadow">

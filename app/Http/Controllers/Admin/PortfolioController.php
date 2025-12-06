@@ -75,9 +75,13 @@ class PortfolioController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(int $id): View|Factory
     {
-        //
+        $portfolio = Portfolio::where('id', $id)->firstOrFail();
+
+        $title = $portfolio->title;
+
+        return view('admin.portfolio.show', compact('portfolio', 'title'));
     }
 
     /**

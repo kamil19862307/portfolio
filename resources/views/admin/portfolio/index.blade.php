@@ -61,7 +61,9 @@
                                         </div>
                                         <div class="ml-3">
                                             <p class="text-gray-900 whitespace-no-wrap">
-                                                {{ $portfolio->title }}
+                                                <a href="{{ route('admin.portfolio.show', $portfolio->id) }}">
+                                                    {{ $portfolio->title }}
+                                                </a>
                                             </p>
                                         </div>
                                     </div>
