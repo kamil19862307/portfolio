@@ -28,7 +28,7 @@
                                 @enderror
 
                                 <p class="text-xs text-gray-500 mt-1">
-                                    Поддерживаемые форматы: JPG, PNG, WEBP
+                                    Поддерживаемые форматы: jpg, jpeg, png, webp
                                 </p>
 
                                 <input
@@ -65,14 +65,9 @@
                         <div class="mt-2">
                             <label class="block text-sm text-gray-600" for="slug">Слаг</label>
                             <input class="w-full px-5  py-4 text-gray-700 bg-gray-200 rounded" id="slug" name="slug"
-                                   type="text" required=""
+                                   type="text"
                                    placeholder="Если не заполнять, значение возмётся из названия проекта"
                                    aria-label="Slug">
-                        </div>
-                        <div class="mt-2">
-                            <label class="block text-sm text-gray-600" for="image">Image</label>
-                            <input class="w-full px-5  py-4 text-gray-700 bg-gray-200 rounded" id="image" name="image"
-                                   type="text" required="" placeholder="Image" aria-label="Image">
                         </div>
                         <div class="mt-2">
                             <label class=" block text-sm text-gray-600" for="description">Описание</label>
