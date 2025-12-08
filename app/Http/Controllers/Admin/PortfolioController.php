@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePortfolioRequest;
+use App\Http\Requests\UpdatePortfolioRequest;
 use App\Models\Portfolio;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\Factory;
 use Illuminate\View\View;
@@ -87,17 +89,48 @@ class PortfolioController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(int $id): View|Factory
     {
-        //
+        $portfolio = Portfolio::where('id', $id)->firstOrFail();
+
+        return view('admin.portfolio.edit', compact('portfolio'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdatePortfolioRequest $request, int $id): RedirectResponse
     {
-        //
+        $validated = $request->validated();
+
+        $portfolio = Portfolio::where('id', $id)->firstOrFail();
+
+        // Если есть новая кртинка, то удаляем старую и загружаем новую
+        if ($request->hasFile('image')) {
+
+            if ($portfolio->image && Storage::disk('public')->exists('images/portfolio/' . $portfolio->image)) {
+
+                Storage::disk('public')->delete('images/portfolio/' . $portfolio->image);
+
+            }
+
+            $slug = $validated['slug'];
+
+            $name = $slug . '.' . $request->file('image')->getClientOriginalExtension();
+
+            $validated['image'] = $name;
+
+            $path = $request->file('image')->storeAs('images/portfolio', $name, 'public');
+
+        } else {
+
+            $validated['image'] = $portfolio->image;
+
+        }
+
+        $portfolio->update($validated);
+
+        return redirect()->route('admin.portfolio.index');
     }
 
     /**
