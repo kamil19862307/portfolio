@@ -1,16 +1,31 @@
 <!doctype html>
 <html lang="ru">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <title>Камиль Музафаров — UI/UX Designer & Developer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Небольшие визуальные правки для статистики и карт портфолио */
-        .stat-card { background: linear-gradient(90deg, rgba(99,102,241,0.08), rgba(139,92,246,0.02)); }
-        .glass { backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
-        .portfolio-item:hover .overlay { transform: translateY(0%); opacity: 1; }
-        .overlay { transition: all .28s ease; transform: translateY(8%); opacity: 0; }
+        .stat-card {
+            background: linear-gradient(90deg, rgba(99, 102, 241, 0.08), rgba(139, 92, 246, 0.02));
+        }
+
+        .glass {
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+        }
+
+        .portfolio-item:hover .overlay {
+            transform: translateY(0%);
+            opacity: 1;
+        }
+
+        .overlay {
+            transition: all .28s ease;
+            transform: translateY(8%);
+            opacity: 0;
+        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-gray-50 via-white to-indigo-50 text-gray-800 antialiased">
@@ -19,7 +34,9 @@
 <header class="sticky top-0 z-40 bg-white/70 glass backdrop-blur-md border-b border-gray-200">
     <div class="max-w-6xl mx-auto px-5 py-4 flex items-center justify-between">
         <a class="flex items-center gap-3" href="#">
-            <div class="w-10 h-10 rounded-md bg-gradient-to-tr from-indigo-600 to-purple-500 flex items-center justify-center text-white font-semibold">KM</div>
+            <div class="w-10 h-10 rounded-md bg-gradient-to-tr from-indigo-600 to-purple-500 flex items-center justify-center text-white font-semibold">
+                KM
+            </div>
             <div>
                 <div class="font-semibold">Камиль Музафаров</div>
                 <div class="text-xs text-gray-500 -mt-0.5">UI/UX Designer & Developer</div>
@@ -56,12 +73,15 @@
                 Привет, я Камиль Музафаров
             </h1>
             <p class="mt-4 text-gray-600 max-w-xl">
-                Я создаю удобные и красивые интерфейсы и разворачиваю их в производительный код.
-                Специализируюсь на UI/UX и frontend-разработке в адаптивных веб-приложениях.
+                Разрабатываю backend и продуманные API, которые делают веб-приложения быстрыми, устойчивыми и готовыми к
+                росту.
+                Использую PHP и Laravel, чтобы превращать сложные задачи в <b>чистый, поддерживаемый и расширяемый
+                    код</b>.
             </p>
 
             <div class="mt-6 flex items-center gap-4">
-                <a href="#contact" class="inline-flex items-center gap-2 px-5 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-md shadow">
+                <a href="#contact"
+                   class="inline-flex items-center gap-2 px-5 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-md shadow">
                     Say Hello!
                 </a>
                 <a href="#portfolio" class="text-sm text-gray-600 hover:text-gray-800">View portfolio →</a>
@@ -85,7 +105,9 @@
 
         <div class="md:col-span-5 flex justify-center md:justify-end">
             <!-- Inline SVG avatar as placeholder. Replace with actual photo block when ready. -->
-            <div class="w-56 h-56 rounded-xl shadow-lg overflow-hidden bg-white border">
+            <div class="relative w-56 h-56 rounded-xl shadow-lg overflow-hidden bg-white border">
+
+                <!-- SVG фон -->
                 <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
                     <defs>
                         <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
@@ -94,12 +116,20 @@
                         </linearGradient>
                     </defs>
                     <rect width="100%" height="100%" fill="url(#g1)"/>
-                    <g transform="translate(0,12)">
-                        <rect x="14" y="26" width="172" height="148" rx="12" fill="#fff" opacity="0.08"/>
-                        <text x="100" y="110" font-size="48" fill="white" font-family="sans-serif" font-weight="700" text-anchor="middle">KM</text>
-                    </g>
                 </svg>
-                <img src="{{ asset('images/kamil.png') }}" alt="Аватар пользователя" class="relative w-full h-full object-cover" loading="lazy">
+
+                <!-- Картинка внутри внутреннего квадрата -->
+                <img src="{{ asset('images/kamil.jpg') }}"
+                    alt="Аватар"
+                    class="absolute"
+                    style="
+                        top: 10px;   /* y + translateY */
+                        left: 10px;
+                        width: 202px;
+                        height: 202px;
+                        object-fit: cover;
+                        border-radius: 12px;"
+                    loading="lazy">
             </div>
         </div>
     </section>
@@ -107,7 +137,7 @@
     <!-- ABOUT / SERVICES -->
     <section id="services" class="mt-14 grid grid-cols-1 md:grid-cols-3 gap-8">
         <div class="md:col-span-2 bg-white p-8 rounded-xl shadow-sm border">
-            <h2 class="text-2xl font-semibold">What I do?</h2>
+            <h2 class="text-2xl font-semibold">Чем я занимаюсь?</h2>
             <p class="mt-3 text-gray-600 max-w-2xl">
                 Я проектирую пользовательские пути, создаю визуально привлекательный интерфейс и реализую
                 масштабируемые веб-приложения с акцентом на производительность и удобство.
@@ -125,20 +155,22 @@
                 </div>
                 <div class="p-4 border rounded-lg">
                     <h4 class="font-semibold">Web Development</h4>
-                    <p class="text-sm text-gray-500 mt-1">Современный frontend, адаптивность, оптимизация и поддерживаемость.</p>
+                    <p class="text-sm text-gray-500 mt-1">Современный frontend, адаптивность, оптимизация и
+                        поддерживаемость.</p>
                 </div>
             </div>
         </div>
 
         <aside class="bg-gradient-to-b from-white to-indigo-50 p-6 rounded-xl border glass">
-            <h3 class="font-semibold text-lg">Quick contact</h3>
+            <h3 class="font-semibold text-lg">Контакты</h3>
             <p class="text-sm text-gray-600 mt-2">Готов обсудить проект, сотрудничество или консультацию.</p>
             <div class="mt-4">
-                <a href="#contact" class="block w-full text-center px-4 py-2 bg-purple-600 text-white rounded-md">Say Hello!</a>
+                <a href="#contact" class="block w-full text-center px-4 py-2 bg-purple-600 text-white rounded-md">
+                    Записаться на консультацию</a>
             </div>
             <div class="mt-6 text-sm text-gray-500">
-                <div><strong>Email</strong> — kamil@example.com</div>
-                <div class="mt-2"><strong>Location</strong> — Варшава, Польша</div>
+                <div><strong>Email</strong> — kamil19862307@gmail.com</div>
+                <div class="mt-2"><strong>Проживаю</strong> — Россия, Казань</div>
             </div>
         </aside>
     </section>
@@ -154,61 +186,37 @@
         </div>
 
         <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Portfolio item template -->
-            <article class="portfolio-item bg-white rounded-xl shadow overflow-hidden border">
-                <div class="relative">
-                    <div class="h-48 bg-gradient-to-tr from-indigo-500 to-pink-400 flex items-center justify-center text-white font-bold">Project Image</div>
-                    <div class="absolute inset-0 flex items-end">
-                        <div class="w-full p-4 overlay">
-                            <div class="bg-white/90 rounded-md p-3 flex items-center justify-between">
-                                <div>
-                                    <div class="text-sm font-semibold">Product Admin Dashboard</div>
-                                    <div class="text-xs text-gray-500">Responsive admin UI with data visualization</div>
-                                </div>
-                                <a href="#" class="text-indigo-600 text-sm">Case Study</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
 
-            <article class="portfolio-item bg-white rounded-xl shadow overflow-hidden border">
-                <div class="relative">
-                    <div class="h-48 bg-gradient-to-tr from-green-400 to-emerald-500 flex items-center justify-center text-white font-bold">Project Image</div>
-                    <div class="absolute inset-0 flex items-end">
-                        <div class="w-full p-4 overlay">
-                            <div class="bg-white/90 rounded-md p-3 flex items-center justify-between">
-                                <div>
-                                    <div class="text-sm font-semibold">E-commerce Dashboard</div>
-                                    <div class="text-xs text-gray-500">Analytics and management tools</div>
-                                </div>
-                                <a href="#" class="text-indigo-600 text-sm">Case Study</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
+            @foreach($portfolios as $portfolio)
 
-            <article class="portfolio-item bg-white rounded-xl shadow overflow-hidden border">
-                <div class="relative">
-                    <div class="h-48 bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center text-white font-bold">Project Image</div>
-                    <div class="absolute inset-0 flex items-end">
-                        <div class="w-full p-4 overlay">
-                            <div class="bg-white/90 rounded-md p-3 flex items-center justify-between">
-                                <div>
-                                    <div class="text-sm font-semibold">SaaS Admin Panel</div>
-                                    <div class="text-xs text-gray-500">Clean, component-driven UI</div>
+                <!-- Portfolio item template -->
+                <article class="portfolio-item bg-white rounded-xl shadow overflow-hidden border">
+                    <div class="relative">
+                        <div class="h-48 bg-gradient-to-tr from-indigo-500 to-pink-400 flex items-center justify-center text-white font-bold">
+                            <img src="{{ asset('storage/images/portfolio/' . $portfolio->image) }}"
+                                 class="w-full h-full object-cover">
+                        </div>
+                        <div class="absolute inset-0 flex items-end">
+                            <div class="w-full p-4 overlay">
+                                <div class="bg-white/90 rounded-md p-3 flex items-center justify-between">
+                                    <div>
+                                        <div class="text-sm font-semibold">{{ $portfolio->title }}</div>
+                                        <div class="text-xs text-gray-500">{{ $portfolio->description }}</div>
+                                    </div>
+                                    <a href="#" class="text-indigo-600 text-sm">Подробнее</a>
                                 </div>
-                                <a href="#" class="text-indigo-600 text-sm">Case Study</a>
                             </div>
                         </div>
                     </div>
-                </div>
-            </article>
+                </article>
+
+            @endforeach
+
 
             <!-- Additional visual items -->
             <article class="portfolio-item bg-white rounded-xl shadow overflow-hidden border">
-                <div class="h-48 bg-cover bg-center" style="background-image:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(0,0,0,0.04)), url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22160%22></svg>')"></div>
+                <div class="h-48 bg-cover bg-center"
+                     style="background-image:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(0,0,0,0.04)), url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22160%22></svg>')"></div>
                 <div class="p-4">
                     <div class="text-sm font-semibold">Interior / Visual</div>
                     <div class="text-xs text-gray-500 mt-1">Lifestyle and product photography presentation</div>
@@ -217,7 +225,9 @@
             </article>
 
             <article class="portfolio-item bg-white rounded-xl shadow overflow-hidden border">
-                <div class="h-48 bg-green-50 flex items-center justify-center text-green-700 font-semibold">Illustration</div>
+                <div class="h-48 bg-green-50 flex items-center justify-center text-green-700 font-semibold">
+                    Illustration
+                </div>
                 <div class="p-4">
                     <div class="text-sm font-semibold">Brand Mascot</div>
                     <div class="text-xs text-gray-500 mt-1">Character design and assets</div>
@@ -226,7 +236,8 @@
             </article>
 
             <article class="portfolio-item bg-white rounded-xl shadow overflow-hidden border">
-                <div class="h-48 bg-purple-50 flex items-center justify-center text-purple-700 font-semibold">Photo</div>
+                <div class="h-48 bg-purple-50 flex items-center justify-center text-purple-700 font-semibold">Photo
+                </div>
                 <div class="p-4">
                     <div class="text-sm font-semibold">Visual Series</div>
                     <div class="text-xs text-gray-500 mt-1">Editorial and photography composites</div>
@@ -244,15 +255,18 @@
             <form class="mt-6 space-y-4">
                 <div>
                     <label class="text-sm text-gray-700">Name</label>
-                    <input class="mt-1 block w-full rounded-md border-gray-200 shadow-sm" placeholder="Камиль Музафаров" />
+                    <input class="mt-1 block w-full rounded-md border-gray-200 shadow-sm"
+                           placeholder="Камиль Музафаров"/>
                 </div>
                 <div>
                     <label class="text-sm text-gray-700">Email</label>
-                    <input class="mt-1 block w-full rounded-md border-gray-200 shadow-sm" placeholder="kamil@example.com" />
+                    <input class="mt-1 block w-full rounded-md border-gray-200 shadow-sm"
+                           placeholder="kamil@example.com"/>
                 </div>
                 <div>
                     <label class="text-sm text-gray-700">Message</label>
-                    <textarea class="mt-1 block w-full rounded-md border-gray-200 shadow-sm h-28" placeholder="Кратко опишите задачу"></textarea>
+                    <textarea class="mt-1 block w-full rounded-md border-gray-200 shadow-sm h-28"
+                              placeholder="Кратко опишите задачу"></textarea>
                 </div>
                 <div>
                     <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-md">Send message</button>

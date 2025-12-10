@@ -3,10 +3,10 @@
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\BlogController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MainController;
+use App\Http\Controllers\Admin\PortfolioController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', MainController::class);
 
 Route::get('/calendar', [AppointmentController::class, 'show'])->name('calendar');
 
@@ -26,6 +26,6 @@ Route::prefix('admin')
 
     });
 
-    Route::resource('portfolio', App\Http\Controllers\Admin\PortfolioController::class);
+    Route::resource('portfolio', PortfolioController::class);
 
 });
