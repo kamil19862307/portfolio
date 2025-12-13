@@ -17,7 +17,10 @@ class PortfolioFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => fake()->sentence(3),
+            'slug' => fake()->slug(3),
+            'description' => fake()->sentence(10),
+            'image' => 'no_image.png',
         ];
     }
 }

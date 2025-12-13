@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\BlogController;
 use Illuminate\Support\Facades\Route;
@@ -27,5 +28,7 @@ Route::prefix('admin')
     });
 
     Route::resource('portfolio', PortfolioController::class);
+
+    Route::resource('user', UserController::class);
 
 });

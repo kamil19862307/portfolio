@@ -22,9 +22,11 @@ class PortfolioController extends Controller
      */
     public function index(): View|Factory
     {
+        $title = 'Все портфолио';
+
         $portfolios = Portfolio::all();
 
-        return view('admin.portfolio.index', compact('portfolios'));
+        return view('admin.portfolio.index', compact('portfolios') , compact('title'));
 
     }
 
@@ -105,10 +107,14 @@ class PortfolioController extends Controller
 
         $portfolio = Portfolio::where('id', $id)->firstOrFail();
 
-        // Если есть новая кртинка, то удаляем старую и загружаем новую
+        // Если есть новая кртинка, то удаляем старую и загружаем новую, только не трогаем дефолтную
         if ($request->hasFile('image')) {
 
-            if ($portfolio->image && Storage::disk('public')->exists('images/portfolio/' . $portfolio->image)) {
+            if ($portfolio->image &&
+
+                $portfolio->image !== 'no_image.png' &&
+
+                Storage::disk('public')->exists('images/portfolio/' . $portfolio->image)) {
 
                 Storage::disk('public')->delete('images/portfolio/' . $portfolio->image);
 

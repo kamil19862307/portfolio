@@ -2,17 +2,19 @@
 
 namespace Database\Seeders;
 
-use App\Models\Portfolio;
+use App\Models\Role;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class PortfolioSeeder extends Seeder
+class RoleSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Portfolio::factory(3)->create();
+        Role::create(['name' => 'admin']);
+        Role::create(['name' => 'manager']);
+        Role::create(['name' => 'user']);
     }
 }
