@@ -20,8 +20,16 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'image',
         'password',
     ];
+
+    public function getImageUrlAttribute(): string
+    {
+        return $this->image
+            ? asset('storage/images/user/' . $this->image)
+            : asset('storage/images/user/no_image.png');
+    }
 
     /**
      * The attributes that should be hidden for serialization.
