@@ -23,11 +23,11 @@
                         <tr>
                             <th
                                 class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                Название проекта
+                                Имя
                             </th>
                             <th
                                 class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                Rol
+                                Роль
                             </th>
                             <th
                                 class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
@@ -61,7 +61,7 @@
                                         </div>
                                         <div class="ml-3">
                                             <p class="text-gray-900 whitespace-no-wrap">
-                                                <a href="{{ route('admin.portfolio.show', $user->id) }}">
+                                                <a href="{{ route('admin.user.show', $user) }}">
                                                     {{ $user->name }}
                                                 </a>
                                             </p>
@@ -69,7 +69,7 @@
                                     </div>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                    <p class="text-gray-900 whitespace-no-wrap">Admin</p>
+                                    <p class="text-gray-900 whitespace-no-wrap">{{ $user->role->label() }}</p>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                     <p class="text-gray-900 whitespace-no-wrap">
@@ -85,7 +85,7 @@
                                     </span>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                    <a href="{{ route('admin.portfolio.edit', $user->id) }}">
+                                    <a href="{{ route('admin.user.edit', $user) }}">
                                         <button
                                             class="px-4 py-1 text-white font-light tracking-wider bg-gray-400 rounded"
                                             type="button">
@@ -94,7 +94,7 @@
                                     </a>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                    <form action="{{ route('admin.portfolio.destroy', $user->id) }}"
+                                    <form action="{{ route('admin.user.destroy', $user) }}"
                                           method="POST"
                                           onsubmit="return confirm('Точно удалить?')">
 

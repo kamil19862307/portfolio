@@ -1,15 +1,15 @@
 @extends('admin.layouts.app')
 
-@section('title', $title ?? 'Портфолио | Добавить проект')
+@section('title', $title ?? 'Пользователи | Добавить пользователя')
 
 @section('content')
     <main class="w-full flex-grow p-6">
-        <h1 class="w-full text-3xl text-black pb-6">Портфолио</h1>
+        <h1 class="w-full text-3xl text-black pb-6">Пользователя</h1>
 
         <div class="flex flex-wrap">
             <div class="w-full lg:w-1/2 my-6 pr-0 lg:pr-2">
                 <p class="text-xl pb-6 flex items-center">
-                    <i class="fas fa-list mr-3"></i> Добавить проекта
+                    <i class="fas fa-list mr-3"></i> Добавить пользователя
                 </p>
                 <div class="leading-loose">
                     <form method="post" enctype="multipart/form-data" action="{{ route('admin.user.store') }}"
@@ -72,6 +72,30 @@
                                    id="email" name="email" type="text" required="" value="{{ old('email') }}"
                                    placeholder="Email"
                                    aria-label="Email">
+                        </div>
+
+                        <div class="space-y-3 mt-2">
+                            <label class="block text-sm text-gray-600" for="email">Роль</label>
+
+                            @error('role')
+                            <label class="block text-sm text-red-400" for="role">{{ $message }}</label>
+                            @enderror
+
+                            @foreach($roles as $role)
+
+                                <label class="flex items-center gap-3 cursor-pointer">
+                                    <input
+                                            type="radio"
+                                            name="role"
+                                            value="{{ $role->value }}"
+                                            @checked(old('role') === $role->value)
+                                            class="h-4 w-4 text-blue-600 focus:ring-blue-500"
+                                    >
+                                    <span class="text-gray-800">{{ $role->label() }}</span>
+                                </label>
+
+                            @endforeach
+
                         </div>
 
                         <div class="mt-2">

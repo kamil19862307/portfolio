@@ -9,7 +9,7 @@
         <div class="flex flex-wrap">
             <div class="w-full lg:w-1/2 my-6 pr-0 lg:pr-2">
                 <p class="text-xl pb-6 flex items-center">
-                    <i class="fas fa-list mr-3"></i> Добавить проекта
+                    <i class="fas fa-list mr-3"></i> Добавить проект
                 </p>
                 <div class="leading-loose">
                     <form method="post" enctype="multipart/form-data" action="{{ route('admin.portfolio.store') }}"

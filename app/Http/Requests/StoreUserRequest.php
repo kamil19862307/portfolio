@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\Role;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Enum;
 use Illuminate\Validation\Rules\Password;
 
 class StoreUserRequest extends FormRequest
@@ -25,6 +27,7 @@ class StoreUserRequest extends FormRequest
         return [
             'name' => 'required|string|max:50',
             'email' => 'required|string|email:rfc,dns|unique:users,email',
+            'role' => ['required', new Enum(Role::class)],
             'image' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
             'password' => ['required', 'confirmed', Password::defaults()],
         ];

@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\Role;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class UserController extends Controller
 {
@@ -26,17 +28,19 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): Factory|View
     {
         $title = 'Создание пользователя';
 
-        return view('admin.user.create', compact('title'));
+        $roles = Role::cases();
+
+        return view('admin.user.create', compact('title', 'roles'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreUserRequest $request)
+    public function store(StoreUserRequest $request): RedirectResponse
     {
         $data = $request->validated();
 
@@ -61,9 +65,11 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(User $user): Factory|View
     {
-        //
+        $title = 'Посмотреть пользователя';
+
+        return view('admin.user.show', compact('user', 'title'));
     }
 
     /**
@@ -85,8 +91,10 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user): RedirectResponse
     {
-        //
+        $user->delete();
+
+        return redirect()->back();
     }
 }

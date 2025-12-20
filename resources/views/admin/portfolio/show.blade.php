@@ -30,7 +30,7 @@
                         <div class="mt-2">
                             <label class="block text-sm text-gray-600" for="title">Название</label>
 
-                            <input class="w-full px-5 py-1 text-gray-700 @error('title') border-2 border-red-400 @enderror bg-gray-200 rounded"
+                            <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded"
                                    id="title"
                                    name="title"
                                    type="text"

@@ -20,15 +20,15 @@ class UserSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'admin@example.com',
             'image' => 'no_image.png',
+            'role' => \App\Enums\Role::ADMIN,
             'password' => Hash::make('password'),
-            'role_id' => Role::where('name', 'admin')->first()->id,
             'email_verified_at' => now(),
             'remember_token' => Str::random(10),
         ]);
 
         // Обычные пользователи
         User::factory(5)->create([
-            'role_id' => Role::where('name', 'user')->first()->id,
+            'role' => \App\Enums\Role::USER
         ]);
     }
 }
