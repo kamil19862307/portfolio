@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', $title ?? 'Пользователь | Посмотреть пользователя')
+@section('title', $title ?? 'Пользователи | Посмотреть пользователя')
 
 @section('content')
     <main class="w-full flex-grow p-6">

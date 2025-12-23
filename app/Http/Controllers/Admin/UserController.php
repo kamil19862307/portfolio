@@ -10,6 +10,8 @@ use App\Models\User;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -75,17 +77,63 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $user): Factory|View
     {
-        //
+        $title = 'Изменить данные пользователя';
+
+        $roles = Role::cases();
+
+        return view('admin.user.edit', compact('user', 'title', 'roles'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request, string $id)
+    public function update(UpdateUserRequest $request, User $user): RedirectResponse
     {
-        //
+        $validated = $request->validated();
+
+        // Если есть новая кртинка, то удаляем старую и загружаем новую, только не трогаем дефолтную
+        if ($request->hasFile('image')) {
+
+            if ($user->image
+
+                && $user->image !== 'no_image.png'
+
+                && Storage::disk('public')->exists('images/user/' . $user->image)) {
+
+                Storage::disk('public')->delete('images/user/' . $user->image);
+
+            }
+
+                $file = $request->file('image');
+
+                $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
+
+                $validated['image'] = $fileName;
+
+                $file->storeAs('images/user/', $fileName,  'public');
+
+        } else {
+
+            $validated['image'] = $user->image;
+
+        }
+
+        // Если не введён новый пароль, то оставляем старый
+        if (filled($validated['password'])) {
+
+            $validated['password'] = Hash::make($validated['password']);
+
+        } else {
+
+            unset($validated['password']);
+
+        }
+
+        $user->update($validated);
+
+        return redirect()->route('admin.user.index');
     }
 
     /**

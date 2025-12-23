@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\Role;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Enum;
 use Illuminate\Validation\Rules\Password;
 
 class UpdateUserRequest extends FormRequest
@@ -24,9 +26,10 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:50',
-            'email' => 'required|string|email:rfc,dns|unique:users,email',
-            'image' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'password' => ['required', 'confirmed', 'min:8', Password::defaults()],
+            'email' => 'required|string|email:rfc,dns',
+            'role' => ['required', new Enum(Role::class)],
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'password' => ['nullable', 'confirmed', Password::defaults()],
         ];
     }
 }

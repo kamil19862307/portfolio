@@ -116,7 +116,7 @@ class PortfolioController extends Controller
 
                 Storage::disk('public')->exists('images/portfolio/' . $portfolio->image)) {
 
-                Storage::disk('public')->delete('images/portfolio/' . $portfolio->image);
+                    Storage::disk('public')->delete('images/portfolio/' . $portfolio->image);
 
             }
 
