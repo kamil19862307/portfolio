@@ -80,7 +80,14 @@
             <div x-show="isOpen" class="absolute w-32 bg-white rounded-lg shadow-lg py-2 mt-16">
                 <a href="#" class="block px-4 py-2 account-link hover:text-white">Account</a>
                 <a href="#" class="block px-4 py-2 account-link hover:text-white">Support</a>
-                <a href="#" class="block px-4 py-2 account-link hover:text-white">Sign Out</a>
+
+                @auth()
+                    <a href="{{ route('logout') }}" class="block px-4 py-2 account-link hover:text-white">Logout</a>
+                @endauth
+
+                @guest()
+                    <a href="{{ route('login') }}" class="block px-4 py-2 account-link hover:text-white">Login</a>
+                @endguest
             </div>
         </div>
     </header>
