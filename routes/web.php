@@ -24,6 +24,8 @@ Route::controller(LoginController::class)->group(function () {
 // Admin panel
 Route::prefix('admin')
 
+    ->middleware(['auth'])
+
     ->name('admin.')
 
     ->group(function () {

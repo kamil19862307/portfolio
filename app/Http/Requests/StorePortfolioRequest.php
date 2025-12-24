@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Portfolio;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StorePortfolioRequest extends FormRequest
@@ -11,7 +12,7 @@ class StorePortfolioRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return auth()->check() && auth()->user()->isAdmin();
     }
 
     /**
