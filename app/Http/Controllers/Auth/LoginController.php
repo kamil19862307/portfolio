@@ -19,7 +19,9 @@ class LoginController extends Controller
 
     public function store(LoginStoreRequest $request): RedirectResponse
     {
-        if (Auth::attempt($request->only('email', 'password'))) {
+        $remember = $request->boolean('remember');
+
+        if (Auth::attempt($request->only('email', 'password'), $remember)) {
             $request->session()->regenerate();
 
             return redirect()->intended(route('home'));
