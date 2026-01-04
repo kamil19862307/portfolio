@@ -81,7 +81,7 @@
             </button>
 
             <a
-                    href="{{ route('register') }}"
+                    href="{{ route('register.store') }}"
                     class="block text-center w-full border border-gray-300 py-2 rounded-lg hover:bg-gray-50 transition"
             >
                 Регистрация
